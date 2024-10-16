@@ -27,9 +27,20 @@ def salvar_dados_irrigacao(arquivo, dados):
         print(f"Erro ao salvar arquivo JSON: {e}")
 
 def ler_sensores():
-    return [{"id": 1, "umidade": 25, "area": 2},
-            {"id": 2, "umidade": 45, "area": 5},
-            {"id": 3, "umidade": 65, "area": 3}]
+    sensores = []
+    while True:
+        try:
+            id_sensor = int(input("ID do sensor: "))
+            umidade = float(input("Umidade (%): "))
+            area = float(input("Área (m²): "))
+            sensores.append({"id": id_sensor, "umidade": umidade, "area": area})
+            continuar = input("Deseja inserir outro sensor? (s/n): ").lower()
+            if continuar != 's':
+                break
+        except ValueError as e:
+            print(f"Entrada inválida: {e}")
+    return sensores
+
 
 def registrar_dados_banco(connection, dados):
     try:
